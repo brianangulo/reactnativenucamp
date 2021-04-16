@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Text, View, ScrollView, FlatList } from "react-native";
-import { Card } from "react-native-elements";
+import { Card, Icon } from "react-native-elements";
 import { COMMENTS } from "../shared/comments";
 import { CAMPSITES } from "../shared/campsites";
-import { Card, Icon } from "react-native-elements";
-
 
 function RenderComments({ comments }) {
   const renderCommentItem = ({ item }) => {
