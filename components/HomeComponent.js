@@ -6,6 +6,8 @@ import { PROMOTIONS } from "../shared/promotions";
 import { PARTNERS } from "../shared/partners";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import Loading from "./LoadingComponent";
+
 
 const mapStateToProps = (state) => {
   return {
@@ -17,6 +19,19 @@ const mapStateToProps = (state) => {
 
 
 function RenderItem({ item }) {
+  const { item } = props;
+
+  if (props.isLoading) {
+    return <Loading />;
+  }
+  if (props.errMess) {
+    return (
+      <View>
+        <Text>{props.errMess}</Text>
+      </View>
+    );
+  }
+
   if (item) {
     return (
       <Card featuredTitle={item.name} 
@@ -51,6 +66,8 @@ class Home extends Component {
               (campsite) => campsite.featured
             )[0]
           }
+          isLoading={this.props.campsites.isLoading}
+          errMess={this.props.campsites.errMess}
         />
         <RenderItem
           item={
@@ -58,6 +75,8 @@ class Home extends Component {
               (promotion) => promotion.featured
             )[0]
           }
+          isLoading={this.props.promotions.isLoading}
+          errMess={this.props.promotions.errMess}
         />
         <RenderItem
           item={
@@ -65,6 +84,8 @@ class Home extends Component {
               (partner) => partner.featured
             )[0]
           }
+          isLoading={this.props.partners.isLoading}
+          errMess={this.props.partners.errMess}
         />
       </ScrollView>
     );
