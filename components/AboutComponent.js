@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { ScrollView, Text, FlatList } from "react-native";
 import { Card, ListItem } from "react-native-elements";
-import { PARTNERS } from "../shared/partners";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
+
+const mapStateToProps = (state) => {
+  return {
+    partners: state.partners,
+  };
+};
 
 function Mission() {
-   return (<Card title={"Our Mission"}>
+  return (
+    <Card title={"Our Mission"}>
       <Text style={{ margin: 10 }}>
         We present a curated database of the best campsites in the vast woods
         and backcountry of the World Wide Web Wilderness. We increase access to
@@ -14,43 +22,40 @@ function Mission() {
         present a platform for campers to share reviews on campsites they have
         visited with each other.
       </Text>
-    </Card>);
-};
+    </Card>
+  );
+}
 
 class About extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        partners: PARTNERS,
-    };
-  }
 
   static navigationOptions = {
     title: "About Us",
   };
 
   render() {
-
-      const renderPartner = ({item}) => {
-        return (<ListItem
+    const renderPartner = ({ item }) => {
+      return (
+        <ListItem
           title={item.name}
           subtitle={item.description}
-          leftAvatar={{ source: require("./images/bootstrap-logo.png") }}
-        />);
-      };
+          leftAvatar={{ source: { uri: baseUrl + item.image } }}
+        />
+      );
+    };
 
     return (
-    <ScrollView>
+      <ScrollView>
         <Mission />
         <Card title={"Community Partners"}>
-            <FlatList 
-            data={this.state.partners}
+          <FlatList
+            data={this.props.partners.partners}
             renderItem={renderPartner}
             keyExtractor={(item) => item.id.toString()}
-            />
+          />
         </Card>
-    </ScrollView>);
+      </ScrollView>
+    );
   }
 }
- 
-export default About;
+
+export default connect(mapStateToProps)(About);
