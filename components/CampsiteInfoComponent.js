@@ -5,12 +5,19 @@ import { COMMENTS } from "../shared/comments";
 import { CAMPSITES } from "../shared/campsites";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import { postFavorite } from "../redux/ActionCreators";
+
 
 const mapStateToProps = (state) => {
   return {
     campsites: state.campsites,
     comments: state.comments,
+    favorites: state.favorites,
   };
+};
+
+const mapDispatchToProps = {
+  postFavorite: (campsiteId) => postFavorite(campsiteId),
 };
 
 function RenderComments({ comments }) {
@@ -76,8 +83,8 @@ class CampsiteInfo extends Component {
     title: "Campsite Information",
   };
 
-  markFavorite() {
-    this.setState({ favorite: true });
+  markFavorite(campsiteId) {
+    this.props.postFavorite(campsiteId);
   }
 
   render() {
@@ -92,8 +99,8 @@ class CampsiteInfo extends Component {
       <ScrollView>
         <RenderCampsite
           campsite={campsite}
-          favorite={this.state.favorite}
-          markFavorite={() => this.markFavorite()}
+          favorite={this.props.favorites.includes(campsiteId)}
+          markFavorite={() => this.markFavorite(campsiteId)}
         />
         <RenderComments comments={comments} />
       </ScrollView>
@@ -101,4 +108,4 @@ class CampsiteInfo extends Component {
   }
 }
 
-export default connect(mapStateToProps)(CampsiteInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(CampsiteInfo);
