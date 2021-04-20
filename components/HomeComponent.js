@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
 };
 
 
-function RenderItem({ item }) {
+function RenderItem(props) {
   const { item } = props;
 
   if (props.isLoading) {
