@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Animated } from "react-native";
 import { Card } from "react-native-elements";
-import { CAMPSITES } from "../shared/campsites";
-import { PROMOTIONS } from "../shared/promotions";
-import { PARTNERS } from "../shared/partners";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import Loading from "./LoadingComponent";
